@@ -1,0 +1,76 @@
+/**
+ * Plasma Void 3D - WordPress Plugin Styles
+ */
+
+.plasma-void-wrapper {
+  background: #020208;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(236, 72, 153, 0.2);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.plasma-void-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: #090914;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.plasma-void-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f472b6;
+}
+
+.plasma-void-fs-btn {
+  background: #1e1b4b;
+  color: #e0e7ff;
+  border: 1px solid #4338ca;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plasma-void-fs-btn:hover {
+  background: #3730a3;
+  color: #ffffff;
+  border-color: #6366f1;
+}
+
+.plasma-void-frame-box {
+  position: relative;
+  width: 100%;
+  background: #000000;
+}
+
+.plasma-void-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Fullscreen mode */
+.plasma-void-wrapper:fullscreen,
+.plasma-void-wrapper:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.plasma-void-wrapper:fullscreen .plasma-void-frame-box,
+.plasma-void-wrapper:-webkit-full-screen .plasma-void-frame-box {
+  height: calc(100vh - 40px) !important;
+}
