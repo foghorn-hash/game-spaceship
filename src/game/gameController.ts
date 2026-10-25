@@ -78,12 +78,38 @@ export class GameController {
   }
 
   private initInputListeners() {
-    window.addEventListener('keydown', this.handleKeyDown);
-    window.addEventListener('keyup', this.handleKeyUp);
+    window.addEventListener('keydown', this.handleKeyDown, { passive: false });
+    window.addEventListener('keyup', this.handleKeyUp, { passive: false });
+    window.addEventListener('mousedown', this.handleMouseDown);
+    window.addEventListener('mouseup', this.handleMouseUp);
     window.addEventListener('blur', this.handleBlur);
   }
 
+  private handleMouseDown = (e: MouseEvent) => {
+    if (e.button === 0 && this.stats.gameStarted && !this.stats.isPaused && !this.stats.isGameOver) {
+      this.input.isShooting = true;
+    }
+  };
+
+  private handleMouseUp = (e: MouseEvent) => {
+    if (e.button === 0) {
+      this.input.isShooting = false;
+    }
+  };
+
   private handleKeyDown = (e: KeyboardEvent) => {
+    // Always prevent spacebar and arrow keys from scrolling the webpage or iframe
+    if (
+      e.code === 'Space' ||
+      e.key === ' ' ||
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowDown' ||
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowRight'
+    ) {
+      e.preventDefault();
+    }
+
     if (!this.stats.gameStarted || this.stats.isGameOver) return;
 
     if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
@@ -115,6 +141,11 @@ export class GameController {
   };
 
   private handleKeyUp = (e: KeyboardEvent) => {
+    if (e.code === 'Space' || e.key === ' ') {
+      e.preventDefault();
+      this.input.isShooting = false;
+    }
+
     if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
       if (this.input.moveX < 0) this.input.moveX = 0;
     } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
@@ -125,10 +156,6 @@ export class GameController {
       if (this.input.moveY > 0) this.input.moveY = 0;
     } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
       if (this.input.moveY < 0) this.input.moveY = 0;
-    }
-
-    if (e.code === 'Space' || e.key === ' ') {
-      this.input.isShooting = false;
     }
 
     if (e.key === 'Shift') {
@@ -401,6 +428,8 @@ export class GameController {
     cancelAnimationFrame(this.frameId);
     window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('keyup', this.handleKeyUp);
+    window.removeEventListener('mousedown', this.handleMouseDown);
+    window.removeEventListener('mouseup', this.handleMouseUp);
     window.removeEventListener('blur', this.handleBlur);
     sound.stopMusic();
     this.particles.dispose();

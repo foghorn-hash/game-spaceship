@@ -13,8 +13,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-black text-white select-none overflow-hidden m-0 p-0 w-screen h-screen">
-    <div id="root" class="w-full h-full"></div>
+  <body class="bg-black text-white select-none overflow-hidden fixed inset-0 m-0 p-0 w-screen h-screen touch-none">
+    <div id="root" class="w-full h-full overflow-hidden"></div>
+    <script>
+      // Prevent any parent or iframe window scroll on Space or Arrow keys
+      window.addEventListener('keydown', function(e) {
+        if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code) || e.key === ' ') {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -75,7 +75,11 @@ export default function App() {
   // Keyboard shortcut listener for Enter / Space on start & gameover screens
   useEffect(() => {
     const handleGlobalKey = (e: KeyboardEvent) => {
-      if (e.code === 'Enter' || e.code === 'Space') {
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+      }
+
+      if (e.code === 'Enter' || e.code === 'Space' || e.key === ' ') {
         if (!stats.gameStarted) {
           handleStartGame();
         } else if (stats.isGameOver) {
@@ -84,7 +88,7 @@ export default function App() {
       }
     };
 
-    window.addEventListener('keydown', handleGlobalKey);
+    window.addEventListener('keydown', handleGlobalKey, { passive: false });
     return () => window.removeEventListener('keydown', handleGlobalKey);
   }, [stats.gameStarted, stats.isGameOver]);
 
