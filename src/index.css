@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  h1, h2, h3, .font-orbitron {
+    font-family: 'Orbitron', monospace, sans-serif;
+  }
+}
+
+/* Custom glow effects */
+.glow-magenta {
+  text-shadow: 0 0 10px rgba(255, 0, 180, 0.8), 0 0 20px rgba(255, 0, 180, 0.4);
+}
+
+.glow-green {
+  text-shadow: 0 0 10px rgba(50, 255, 120, 0.8), 0 0 20px rgba(50, 255, 120, 0.4);
+}
+
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 230, 255, 0.8), 0 0 20px rgba(0, 230, 255, 0.4);
+}
+
+.glow-box-magenta {
+  box-shadow: 0 0 15px rgba(255, 0, 180, 0.5), inset 0 0 10px rgba(255, 0, 180, 0.3);
+}
+
+.glow-box-green {
+  box-shadow: 0 0 15px rgba(50, 255, 120, 0.5), inset 0 0 10px rgba(50, 255, 120, 0.3);
+}

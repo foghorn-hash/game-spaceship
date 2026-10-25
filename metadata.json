@@ -1,0 +1,6 @@
+{
+  "name": "Plasma Void 3D",
+  "description": "Vauhdikas 3D-avaruustaistelupeli: ohjaa neon-alustasi 3D-avaruudessa, ammu kiihdytettyjä plasmapuikkoja ja kukista kehittyvät 3D-vihollisalukset.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
