@@ -37,7 +37,7 @@ export class ProjectileManager {
     this.scene = scene;
 
     // Load minute.png texture
-    this.minuteTexture = textureLoader.load('/assets/aistudio/minute_06a99cad.png');
+    this.minuteTexture = textureLoader.load('./assets/aistudio/minute_06a99cad.png');
     this.minuteTexture.colorSpace = THREE.SRGBColorSpace;
 
     // Player bullet geometry & materials

@@ -39,7 +39,7 @@ export class PlayerShip {
     this.position.set(0, -6, 0);
 
     // 1. Load user's 2D PNG player ship texture
-    const texture = textureLoader.load('/assets/aistudio/ship_f10530f0.png');
+    const texture = textureLoader.load('./assets/aistudio/ship_f10530f0.png');
     texture.colorSpace = THREE.SRGBColorSpace;
 
     // Create 2D plane for the ship sprite with additive glow

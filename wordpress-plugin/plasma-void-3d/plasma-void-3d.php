@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Plasma Void 3D - Avaruuspeli
  * Plugin URI: https://github.com/example/plasma-void-3d
- * Description: Upota nopeatempoinen 3D-avaruusräiskintäpeli mille tahansa WordPress-sivulle tai -artikkeliin helpon lyhytkoodin [plasma_void_3d] avulla.
- * Version: 1.0.0
+ * Description: Upota täysin itsenäinen 3D-avaruusräiskintäpeli mille tahansa WordPress-sivulle helpon lyhytkoodin [plasma_void_3d] avulla.
+ * Version: 1.1.0
  * Author: AI Studio
  * Author URI: https://aistudio.google.com
  * License: GPLv2 or later
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 
 class PlasmaVoid3DPlugin {
 
-    const VERSION = '1.0.0';
+    const VERSION = '1.1.0';
 
     public function __construct() {
         add_action('init', array($this, 'init'));
@@ -27,10 +27,6 @@ class PlasmaVoid3DPlugin {
     }
 
     public function init() {
-        // Register default options if not exists
-        if (false === get_option('plasma_void_default_url')) {
-            add_option('plasma_void_default_url', 'https://ais-pre-ku3wybz4wkl3ab4576aqvu-421769122930.europe-west2.run.app');
-        }
         if (false === get_option('plasma_void_default_height')) {
             add_option('plasma_void_default_height', '680px');
         }
@@ -63,10 +59,10 @@ class PlasmaVoid3DPlugin {
     }
 
     public function register_settings() {
-        register_setting('plasma_void_settings_group', 'plasma_void_default_url', array(
+        register_setting('plasma_void_settings_group', 'plasma_void_custom_url', array(
             'type' => 'string',
             'sanitize_callback' => 'esc_url_raw',
-            'default' => 'https://ais-pre-ku3wybz4wkl3ab4576aqvu-421769122930.europe-west2.run.app'
+            'default' => ''
         ));
         register_setting('plasma_void_settings_group', 'plasma_void_default_height', array(
             'type' => 'string',
@@ -75,11 +71,27 @@ class PlasmaVoid3DPlugin {
         ));
     }
 
+    public function get_local_game_url() {
+        return plugins_url('game/index.html', __FILE__);
+    }
+
     public function render_admin_page() {
+        $local_url = $this->get_local_game_url();
+        $custom_url = get_option('plasma_void_custom_url', '');
+        $has_local_build = file_exists(plugin_dir_path(__FILE__) . 'game/index.html');
         ?>
         <div class="wrap">
             <h1>🛸 Plasma Void 3D - Pelin Asetukset</h1>
             <p>Tällä lisäosalla voit upottaa 3D-avaruustaistelupelin suoraan sivuillesi tai artikkeleihisi.</p>
+
+            <div style="background: #e6fffa; border-left: 4px solid #319795; padding: 12px 16px; margin: 20px 0; border-radius: 4px;">
+                <strong style="color: #234e52;">✓ Sisäänrakennettu itsenäinen peli:</strong>
+                <?php if ($has_local_build): ?>
+                    <span style="color: #285e61;">KÄYTÖSSÄ (Ei ulkoisia palvelinriippuvuuksia tai 404-virheitä). Peli ladataan suoraan tämän lisäosan kansiosta.</span>
+                <?php else: ?>
+                    <span style="color: #c53030;">Huom: Paikallista buildia ei löytynyt kansiosta <code>game/index.html</code>.</span>
+                <?php endif; ?>
+            </div>
 
             <form method="post" action="options.php">
                 <?php settings_fields('plasma_void_settings_group'); ?>
@@ -87,16 +99,16 @@ class PlasmaVoid3DPlugin {
 
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row">Pelin URL-osoite:</th>
+                        <th scope="row">Mukautettu URL (valinnainen):</th>
                         <td>
-                            <input type="url" name="plasma_void_default_url" value="<?php echo esc_attr(get_option('plasma_void_default_url')); ?>" class="regular-text" style="width: 100%; max-width: 550px;" />
-                            <p class="description">Verkko-osoite, jossa peli on julkaistu tai oma paikallinen polku.</p>
+                            <input type="url" name="plasma_void_custom_url" value="<?php echo esc_attr($custom_url); ?>" class="regular-text" style="width: 100%; max-width: 550px;" placeholder="<?php echo esc_attr($local_url); ?>" />
+                            <p class="description">Jätä tämä tyhjäksi käyttääksesi lisäosan sisäänrakennettua peliä (suositus).</p>
                         </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row">Oletuskorkeus:</th>
                         <td>
-                            <input type="text" name="plasma_void_default_height" value="<?php echo esc_attr(get_option('plasma_void_default_height')); ?>" class="small-text" />
+                            <input type="text" name="plasma_void_default_height" value="<?php echo esc_attr(get_option('plasma_void_default_height', '680px')); ?>" class="small-text" />
                             <p class="description">Esim. <code>680px</code>, <code>600px</code> tai <code>85vh</code>.</p>
                         </td>
                     </tr>
@@ -108,16 +120,13 @@ class PlasmaVoid3DPlugin {
             <hr style="margin: 30px 0;" />
 
             <h2>📖 Käyttöohjeet</h2>
-            <p>Voit lisätä pelin mille tahansa sivulle käyttämällä seuraavia lyhytkoodeja:</p>
+            <p>Voit lisätä pelin mille tahansa sivulle tai artikkeliin käyttämällä lyhytkoodia:</p>
 
-            <h3>1. Peruskäyttö (oletusasetuksilla):</h3>
+            <h3>1. Peruskäyttö (suositus):</h3>
             <pre style="background: #f0f0f1; padding: 12px; border-radius: 6px; display: inline-block;">[plasma_void_3d]</pre>
 
             <h3>2. Mukautetulla koolla ja täysnäyttöpainikkeella:</h3>
             <pre style="background: #f0f0f1; padding: 12px; border-radius: 6px; display: inline-block;">[plasma_void_3d width="100%" height="750px" fullscreen="true"]</pre>
-
-            <h3>3. Vaihtoehtoisella URL-osoitteella:</h3>
-            <pre style="background: #f0f0f1; padding: 12px; border-radius: 6px; display: inline-block;">[plasma_void_3d url="https://oma-palvelin.fi/peli/" height="600px"]</pre>
         </div>
         <?php
     }
@@ -126,16 +135,28 @@ class PlasmaVoid3DPlugin {
      * Shortcode: [plasma_void_3d]
      */
     public function render_shortcode($atts) {
-        $default_url = get_option('plasma_void_default_url', 'https://ais-pre-ku3wybz4wkl3ab4576aqvu-421769122930.europe-west2.run.app');
+        $local_url = $this->get_local_game_url();
+        $custom_url = get_option('plasma_void_custom_url', '');
         $default_height = get_option('plasma_void_default_height', '680px');
 
         $args = shortcode_atts(array(
-            'url'        => $default_url,
+            'url'        => '',
             'width'      => '100%',
             'height'     => $default_height,
             'fullscreen' => 'true',
             'class'      => '',
         ), $atts, 'plasma_void_3d');
+
+        // Determine effective URL:
+        // Priority 1: explicitly passed in shortcode attribute
+        // Priority 2: custom url in plugin options
+        // Priority 3: local bundled game in plugin (always reliable, zero 404)
+        $effective_url = $local_url;
+        if (!empty($args['url'])) {
+            $effective_url = $args['url'];
+        } elseif (!empty($custom_url)) {
+            $effective_url = $custom_url;
+        }
 
         wp_enqueue_style('plasma-void-styles');
         wp_enqueue_script('plasma-void-script');
@@ -147,14 +168,14 @@ class PlasmaVoid3DPlugin {
 
         if ($args['fullscreen'] === 'true') {
             $out .= '<div class="plasma-void-header">';
-            $out .= '  <span class="plasma-void-badge">🚀 3D Plasma Space Combat</span>';
+            $out .= '  <span class="plasma-void-badge">🚀 3D PLASMA SPACE COMBAT</span>';
             $out .= '  <button type="button" class="plasma-void-fs-btn" data-target="' . esc_attr($container_id) . '" title="Koko näyttö">⛶ Koko näyttö</button>';
             $out .= '</div>';
         }
 
         $out .= '<div class="plasma-void-frame-box" style="height:' . esc_attr($args['height']) . ';">';
         $out .= '  <iframe id="' . esc_attr($iframe_id) . '" ';
-        $out .= '    src="' . esc_url($args['url']) . '" ';
+        $out .= '    src="' . esc_url($effective_url) . '" ';
         $out .= '    class="plasma-void-iframe" ';
         $out .= '    allow="autoplay; fullscreen; xr-spatial-tracking" ';
         $out .= '    loading="lazy" ';

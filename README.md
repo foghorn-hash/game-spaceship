@@ -1,144 +1,84 @@
-# 🛸 Plasma Void 3D – Asennusohje WordPress-sivustolle
+# 🛸 Plasma Void 3D – WordPress-lisäosa & Asennusohje
 
 **Plasma Void 3D** on moderni Three.js/WebGL -pohjainen 3D-avaruusräiskintäpeli, jossa ohjataan 2D-neonalusta (`ship.png`), ammutaan 3D-kiihdytettyjä plasmapuikkoja (`minute.png`) ja tuhotaan vaikeutuvia 3D-sotalaivoja dynaamisilla ääniefekteillä ja synthwave-taustamusiikilla.
 
-Tämä ohje neuvoo, miten asennat ja upotat pelin WordPress-sivustollesi.
+> **💡 PÄIVITYS v1.1.0 (Korjaus "Error: Page not found" -virheeseen):**
+> Aiempi versio yritti hakea peliä ulkoisesta testiosoitteesta, mikä aiheutti kuvakaappauksessa näkyneen *"Error: Page not found"* -ilmoituksen. 
+> **Päivitetyssä versiossa koko peli on pakattu suoraan lisäosan sisään (`wp-content/plugins/plasma-void-3d/game/`)**, joten se toimii 100 % paikallisesti ja itsenäisesti omalla palvelimellasi ilman ulkoisia palvelinriippuvuuksia tai 404-virheitä!
 
 ---
 
 ## 📦 Sisällysluettelo
 
-1. [Tapa 1: WordPress-lisäosa (Suositeltu ja helpoin)](#1-tapa-1-valmis-wordpress-lisäosa-suositeltu)
-2. [Tapa 2: Suora HTML-upotus (Ilman lisäosaa)](#2-tapa-2-suora-html-upotus-ilman-lisäosaa)
-3. [Tapa 3: Pelin kääntäminen ja ajaminen omalta palvelimelta](#3-tapa-3-pelin-kääntäminen-omalle-palvelimelle-staattinen-build)
-4. [Lyhytkoodin ([plasma_void_3d]) parametrit](#lyhytkoodin-parametrit)
-5. [Pelin ohjaimet ja toiminnot](#pelin-ohjaimet)
-6. [Usein kysytyt kysymykset ja vianmääritys](#vianmääritys)
+1. [Nopea asennus / päivitys WordPressiin](#1-nopea-asennus--päivitys-suositeltu)
+2. [Lyhytkoodi ja käyttö sivulla](#2-lyhytkoodi-ja-käyttö-sivulla)
+3. [Lisäosan asetukset hallintapaneelissa](#3-lisäosan-asetukset-hallintapaneelissa)
+4. [Pelin ohjaimet ja toiminnot](#4-pelin-ohjaimet)
+5. [Vianmääritys](#5-vianmääritys)
 
 ---
 
-## 1. Tapa 1: Valmis WordPress-lisäosa (Suositeltu)
+## 1. Nopea asennus / päivitys (Suositeltu)
 
-Projektin mukana toimitetaan valmis WordPress-lisäosa kansiossa `/wordpress-plugin/plasma-void-3d/` sekä valmiiksi pakattuna ZIP-tiedostona `public/plasma-void-3d.zip`.
+Projektin mukana toimitetaan valmis itsenäinen WordPress-lisäosapaketti:
+📁 **`public/plasma-void-3d.zip`**
 
-### Asennusvaiheet:
-
-### Vaihtoehto A: Asennus ZIP-tiedostona WordPressin hallintapaneelista
-1. Lataa `plasma-void-3d.zip` (löytyy tämän sovelluksen kansiosta `public/plasma-void-3d.zip`).
-2. Kirjaudu WordPress-hallintapaneeliin (esim. `omasivusto.fi/wp-admin`).
-3. Siirry valikkoon **Lisäosat** (Plugins) → **Lisää uusi** (Add New).
-4. Klikkaa sivun yläreunasta painiketta **Lataa lisäosa** (Upload Plugin).
-5. Valitse tietokoneeltasi `plasma-void-3d.zip` ja klikkaa **Asenna nyt** (Install Now).
-6. Klikkaa **Ota lisäosa käyttöön** (Activate Plugin).
-
-### Vaihtoehto B: Asennus FTP:llä tai cPanelin Tiedostonhallinnalla
-1. Kopioi kansio `wordpress-plugin/plasma-void-3d` palvelimellesi polkuun:
-   ```text
-   /wp-content/plugins/plasma-void-3d/
-   ```
-2. Mene WordPressin hallintaan: **Lisäosat** → **Asennetut lisäosat** ja klikkaa *Ota käyttöön*.
+### Vaiheet:
+1. Lataa päivitetty `plasma-void-3d.zip` (koko peli on sisällytetty zip-pakettiin).
+2. Kirjaudu WordPress-hallintapaneeliisi (esim. `omasivusto.fi/wp-admin`).
+3. Siirry kohtaan **Lisäosat** (Plugins) → **Lisää uusi** (Add New).
+4. Klikkaa sivun ylälaidasta **Lataa lisäosa** (Upload Plugin).
+5. Valitse `plasma-void-3d.zip` ja klikkaa **Asenna nyt** (Install Now).
+6. Jos vanha versio oli jo asennettuna, valitse: **Korvaa nykyinen ladatulla** (*Replace current with uploaded*).
+7. Klikkaa **Ota lisäosa käyttöön** (*Activate Plugin*).
 
 ---
 
-### Pelin lisääminen sivulle lyhytkoodilla:
+## 2. Lyhytkoodi ja käyttö sivulla
 
-Avaa mikä tahansa sivu tai artikkeli (Gutenberg-lohkoeditori, Elementor, Divi tai Classic Editor):
+Voit liittää pelin mille tahansa sivulle tai artikkeliin (Gutenberg-lohkoeditori, Elementor, Divi tai Classic Editor):
 
-1. **Gutenberg-editori:**
-   - Lisää lohko **Lyhytkoodi** (Shortcode).
-   - Kirjoita kenttään:
-     ```text
-     [plasma_void_3d]
-     ```
-
-2. **Elementor / Divi / Sivurakentajat:**
-   - Lisää sivulle **Lyhytkoodi**- tai **HTML**-elementti.
-   - Liitä arvoksi:
-     ```text
-     [plasma_void_3d height="700px" fullscreen="true"]
-     ```
-
-3. Tallenna ja julkaise sivu. Peli käynnistyy heti tyylikkäässä tummassa säiliössä täysnäyttöpainikkeineen!
-
----
-
-## 2. Tapa 2: Suora HTML-upotus (Ilman lisäosaa)
-
-Jos et halua asentaa erillistä lisäosaa, voit upottaa pelin suoraan käyttämällä HTML-iframea:
-
-1. Avaa WordPress-sivusi editorissa.
-2. Lisää **Mukautettu HTML** -lohko (Custom HTML) ja liitä seuraava koodi:
-
-```html
-<div style="position: relative; width: 100%; max-width: 1000px; margin: 20px auto; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(236,72,153,0.3); background: #000;">
-  <iframe 
-    src="https://ais-pre-ku3wybz4wkl3ab4576aqvu-421769122930.europe-west2.run.app" 
-    style="width: 100%; height: 680px; border: none; display: block;" 
-    allow="autoplay; fullscreen; xr-spatial-tracking"
-    loading="lazy">
-  </iframe>
-</div>
+### Peruskäyttö (suositus):
+```text
+[plasma_void_3d]
 ```
 
----
+### Mukautetulla koolla ja täysnäyttöpainikkeella:
+```text
+[plasma_void_3d width="100%" height="720px" fullscreen="true"]
+```
 
-## 3. Tapa 3: Pelin kääntäminen omalle palvelimelle (Staattinen build)
+### Koko ruudun korkuinen näkymä:
+```text
+[plasma_void_3d height="85vh" fullscreen="true"]
+```
 
-Jos haluat ajaa peliä 100 % omalla palvelimellasi ilman ulkoista verkko-osoitetta:
-
-1. Aja projektin juurihakemistossa build-komento:
-   ```bash
-   npm run build
-   ```
-   Tämä luo `dist/`-kansion, joka sisältää kaikki valmiiksi paketoidut tiedostot:
-   - `index.html`
-   - `assets/*.js` ja `assets/*.css`
-   - `assets/aistudio/minute_06a99cad.png`
-   - `assets/aistudio/ship_f10530f0.png`
-
-2. Siirrä `dist/`-kansion sisältö WordPress-palvelimellesi, esimerkiksi alihakemistoon:
-   ```text
-   /var/www/html/peli/
-   ```
-   (tai WordPressin hakemistoon `/wp-content/uploads/peli/`)
-
-3. Tämän jälkeen peli avautuu osoitteesta `https://omasivusto.fi/peli/`, ja voit upottaa sen lyhytkoodilla:
-   ```text
-   [plasma_void_3d url="https://omasivusto.fi/peli/" height="700px"]
-   ```
-
----
-
-## Lyhytkoodin parametrit
-
-Lisäosa tukee useita käteviä parametreja:
-
+### Lyhytkoodin kaikki parametrit:
 | Parametri | Oletusarvo | Kuvaus | Esimerkki |
 |---|---|---|---|
-| `url` | *Sovelluksen URL* | Pelin verkko-osoite | `url="https://omasivusto.fi/peli/"` |
-| `height` | `680px` | Pelikentän korkeus | `height="800px"` tai `height="85vh"` |
-| `width` | `100%` | Pelikentän leveys | `width="900px"` |
+| `height` | `680px` | Pelikentän korkeus | `height="750px"` tai `height="85vh"` |
+| `width` | `100%` | Pelikentän leveys | `width="960px"` |
 | `fullscreen` | `true` | Näytetäänkö koko näyttö -painike | `fullscreen="false"` |
-| `class` | `""` | Oma CSS-luokka säiliölle | `class="my-game-box"` |
-
-### Esimerkkejä:
-
-* **Täyden ruudun pelikokemus:**
-  ```text
-  [plasma_void_3d height="85vh" fullscreen="true"]
-  ```
-
-* **Kompakti upotus sivupalkkiin tai kapealle palstalle:**
-  ```text
-  [plasma_void_3d height="500px" fullscreen="false"]
-  ```
+| `class` | `""` | Oma CSS-luokkanimi säiliölle | `class="custom-game-frame"` |
+| `url` | *sisäänrakennettu* | Valinnainen oma ulkoinen osoite | Jätä tyhjäksi käyttääksesi paikallista peliä |
 
 ---
 
-## Pelin ohjaimet
+## 3. Lisäosan asetukset hallintapaneelissa
+
+Voit muokata lisäosan yleisasetuksia WordPressin päävalikosta:
+> **Asetukset** → **Plasma Void 3D**
+
+- **Sisäänrakennettu peli:** Näyttää automaattisesti vihreän vahvistuksen `✓ Sisäänrakennettu itsenäinen peli: KÄYTÖSSÄ`.
+- **Oletuskorkeus:** Voit vaihtaa oletuskorkeuden (esim. `700px`).
+- **Mukautettu URL:** Jätä tyhjäksi, jolloin käytetään aina lisäosan omaa paikallista pelitiedostoa.
+
+---
+
+## 4. Pelin ohjaimet
 
 * **Tietokoneella (Näppäimistö & Hiiri):**
-  - `W`, `A`, `S`, `D` tai **Nuolinäppäimet**: Ohjaa alusta 3D-tilassa
+  - `W`, `A`, `S`, `D` tai **Nuolinäppäimet**: Ohjaa alusta 3D-avaruudessa
   - **Välilyönti**: Ammu 3D-kiihdytettyjä plasmapuikkoja
   - **Shift**: Turbo-kiihdytys / Boost
   - `P` tai `Esc`: Tauko (Pause)
@@ -150,16 +90,16 @@ Lisäosa tukee useita käteviä parametreja:
 
 ---
 
-## Vianmääritys
+## 5. Vianmääritys
 
-1. **Äänet eivät kuulu heti sivun latauduttua:**
-   - Nykyaikaiset verkkoselaimet (Chrome, Safari, Firefox) estävät äänten automaattisen toiston (*Autoplay Policy*). Äänet ja taustamusiikki aktivoituvat heti, kun pelaaja klikkaa *"ALOITA TAISTELU"* tai koskettaa näyttöä.
+* **Miksi aiemmin tuli "Error: Page not found"?**
+  - Aiempi versio yritti ladata peliä kehitysympäristön väliaikaisesta Cloud Run -osoitteesta. Uudessa versiossa **1.1.0** peli sijaitsee WordPressin omalla palvelimella hakemistossa `/wp-content/plugins/plasma-void-3d/game/index.html`, jolloin 404-virhettä ei voi tulla.
 
-2. **Koko näyttö (Fullscreen) ei toimi:**
-   - Varmista, että iframessa on attribuutti `allow="fullscreen"`. WordPress-lisäosa asettaa tämän automaattisesti.
+* **Äänet eivät kuulu heti sivun auettua:**
+  - Kaikki modernit selaimet vaativat käyttäjän ensimmäisen vuorovaikutuksen (klikkaus pelin "ALOITA TAISTELU" -nappiin) ennen kuin äänet saavat soida automaattisesti.
 
-3. **HTTPS-vaatimus:**
-   - Jos WordPress-sivustosi käyttää HTTPS-yhteyttä, myös pelin URL-osoitteen on oltava `https://` (Mixed Content -eston välttämiseksi).
+* **Koko näyttö (Fullscreen) mobiilissa:**
+  - Yläpalkin `⛶ Koko näyttö` -painike avaa pelin koko laitteen näytölle parasta pelattavuutta varten.
 
 ---
 

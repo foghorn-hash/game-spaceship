@@ -30,7 +30,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart, highScore }) 
           <div className="bg-slate-900/80 border border-pink-500/30 rounded-xl p-3 flex flex-col items-center text-center">
             <div className="w-14 h-14 rounded-lg bg-pink-950/40 border border-pink-500/20 flex items-center justify-center p-1 mb-2">
               <img
-                src="/assets/aistudio/ship_f10530f0.png"
+                src="./assets/aistudio/ship_f10530f0.png"
                 alt="Pelihahmo"
                 className="w-10 h-10 object-contain drop-shadow-[0_0_8px_#ff00b4]"
               />
@@ -43,7 +43,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart, highScore }) 
           <div className="bg-slate-900/80 border border-emerald-500/30 rounded-xl p-3 flex flex-col items-center text-center">
             <div className="w-14 h-14 rounded-lg bg-emerald-950/40 border border-emerald-500/20 flex items-center justify-center p-1 mb-2">
               <img
-                src="/assets/aistudio/minute_06a99cad.png"
+                src="./assets/aistudio/minute_06a99cad.png"
                 alt="Ammus"
                 className="w-8 h-12 object-contain drop-shadow-[0_0_8px_#22c55e]"
               />

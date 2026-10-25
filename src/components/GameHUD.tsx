@@ -216,7 +216,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({ stats, input, onPause }) => {
             onTouchEnd={() => handleTouchShoot(false)}
             className="w-20 h-20 rounded-full bg-emerald-950/90 border-2 border-emerald-400 active:bg-emerald-600 flex flex-col items-center justify-center text-emerald-300 shadow-xl text-xs font-bold"
           >
-            <img src="/assets/aistudio/minute_06a99cad.png" alt="Tuli" className="w-6 h-9 object-contain -mb-1" />
+            <img src="./assets/aistudio/minute_06a99cad.png" alt="Tuli" className="w-6 h-9 object-contain -mb-1" />
             AMMU
           </button>
         </div>
