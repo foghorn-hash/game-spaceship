@@ -14,7 +14,8 @@
 2. [Lyhytkoodi ja käyttö sivulla](#2-lyhytkoodi-ja-käyttö-sivulla)
 3. [Lisäosan asetukset hallintapaneelissa](#3-lisäosan-asetukset-hallintapaneelissa)
 4. [Pelin ohjaimet ja toiminnot](#4-pelin-ohjaimet)
-5. [Vianmääritys](#5-vianmääritys)
+5. [MIT-Lisenssi & Julkaisu App Storessa / Google Playssa](#5-mit-lisenssi--julkaisu-app-storessa--google-playssa)
+6. [Vianmääritys](#6-vianmääritys)
 
 ---
 
@@ -90,7 +91,22 @@ Voit muokata lisäosan yleisasetuksia WordPressin päävalikosta:
 
 ---
 
-## 5. Vianmääritys
+## 5. MIT-Lisenssi & Julkaisu App Storessa / Google Playssa
+
+Peli on lisensoitu **MIT-lisenssillä** (Copyright (c) 2026 Matti Kiviharju).
+Tarkemmat lisenssitiedostot:
+* 📄 [`LICENSE`](./LICENSE) — Virallinen MIT-lisenssiteksti.
+* 📚 [`LICENSE-FAQ.md`](./LICENSE-FAQ.md) — Kattava UKK pelin julkaisemisesta Apple App Storessa ja Google Playssä (kaupallistaminen, DRM, Capacitor-mobiilipakettiohjeet).
+
+### Pääkohdat pähkinänkuoressa:
+1. **App Store & Google Play -yhteensopivuus:** MIT on 100 % sallittu ja yhteensopiva kummassakin sovelluskaupassa (toisin kuin GPL, MIT ei sisällä DRM-kieltoja).
+2. **Kaupallistaminen:** Saat myydä peliä maksullisena, käyttää mainoksia tai lisätä sovelluksen sisäisiä ostoja (IAP).
+3. **Suljettu lähdekoodi:** Sinun ei tarvitse jakaa pelin lähdekoodia julkaistessasi sovelluksen.
+4. **Attribuutio:** Riittää, että pelin valikossa tai tietoruudussa näkyy tekijätieto ja lisenssimaininta (sisällytetty peliin suoraan).
+
+---
+
+## 6. Vianmääritys
 
 * **Miksi aiemmin tuli "Error: Page not found"?**
   - Aiempi versio yritti ladata peliä kehitysympäristön väliaikaisesta Cloud Run -osoitteesta. Uudessa versiossa **1.1.0** peli sijaitsee WordPressin omalla palvelimella hakemistossa `/wp-content/plugins/plasma-void-3d/game/index.html`, jolloin 404-virhettä ei voi tulla.
