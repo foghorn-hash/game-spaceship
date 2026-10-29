@@ -35,6 +35,7 @@ export class EnemyShip {
   private hitFlashTimer: number = 0;
 
   // Movement AI state
+  public maxHorizontalBound: number = 11;
   private moveTimer: number = 0;
   private targetPosition: THREE.Vector3 = new THREE.Vector3(0, 6, 0);
   private fireTimer: number = 0;
@@ -394,7 +395,7 @@ export class EnemyShip {
     if (this.moveTimer <= 0) {
       this.moveTimer = 1.4 + Math.random() * 1.5;
       // Pick new target waypoint in the upper combat zone
-      const targetX = (Math.random() - 0.5) * 22;
+      const targetX = (Math.random() - 0.5) * (this.maxHorizontalBound * 2);
       const targetY = 3.5 + Math.random() * 4.5;
       const targetZ = (Math.random() - 0.5) * 3;
       this.targetPosition.set(targetX, targetY, targetZ);

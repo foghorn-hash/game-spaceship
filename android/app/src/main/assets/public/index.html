@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#020208" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Plasma Void 3D - Kosminen Taistelu</title>
+    <meta name="description" content="Vauhdikas 3D-avaruustaistelupeli: ohjaa neon-alustasi 3D-avaruudessa, ammu kiihdytettyjä plasmapuikkoja ja kukista kehittyvät 3D-vihollisalukset." />
+    <meta property="og:title" content="Plasma Void 3D - Kosminen Taistelu" />
+    <meta property="og:description" content="Vauhdikas 3D-avaruustaistelupeli: ohjaa neon-alustasi 3D-avaruudessa, ammu kiihdytettyjä plasmapuikkoja ja kukista kehittyvät 3D-vihollisalukset." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="./assets/index-DFeo1c_e.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BstHq-FF.css">
+  </head>
+  <body class="bg-black text-white select-none overflow-hidden fixed inset-0 m-0 p-0 w-screen h-screen touch-none">
+    <div id="root" class="w-full h-full overflow-hidden"></div>
+    <script>
+      // Prevent any parent or iframe window scroll on Space or Arrow keys
+      window.addEventListener('keydown', function(e) {
+        if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code) || e.key === ' ') {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    </script>
+  </body>
+</html>

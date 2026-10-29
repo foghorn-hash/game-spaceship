@@ -64,6 +64,7 @@ export class SpaceScene {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     container.appendChild(this.renderer.domElement);
+    this.handleResize(container.clientWidth, container.clientHeight);
 
     // 5. Studio Environment map for PBR reflections
     const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
@@ -233,7 +234,19 @@ export class SpaceScene {
   }
 
   public handleResize(width: number, height: number) {
-    this.camera.aspect = width / height;
+    if (!height || !width) return;
+    const aspect = width / height;
+    this.camera.aspect = aspect;
+
+    if (aspect < 1.0) {
+      // Smartphone Portrait Mode: adjust distance and FOV so the full combat arena is framed perfectly
+      this.baseCameraPos.z = 28 / Math.max(0.68, aspect * 1.15);
+      this.camera.fov = Math.min(80, Math.max(55, 55 / Math.pow(aspect, 0.4)));
+    } else {
+      this.baseCameraPos.z = 28;
+      this.camera.fov = 55;
+    }
+
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }

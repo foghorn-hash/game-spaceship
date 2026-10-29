@@ -5,6 +5,7 @@ import { EnemyShip } from './enemyShip';
 import { ProjectileManager } from './projectiles';
 import { ParticleSystem } from './particles';
 import { sound } from './audio';
+import { haptic } from './haptics';
 import { GameStats, InputState } from './types';
 
 export class GameController {
@@ -72,6 +73,9 @@ export class GameController {
 
     // Bind event listeners for keyboard & window resize
     this.initInputListeners();
+
+    // Adjust responsive mobile bounds
+    this.resize(container.clientWidth, container.clientHeight);
 
     // Start render loop
     this.startLoop();
@@ -294,6 +298,7 @@ export class GameController {
     const firePoint = this.player.getFirePoint();
     this.projectiles.spawnPlayerBullet(firePoint, new THREE.Vector3(0, 1, 0));
     sound.playPlayerPlasmaShot();
+    haptic.shot();
   }
 
   private checkCollisions() {
@@ -333,6 +338,7 @@ export class GameController {
         if (distSq < hitRadius * hitRadius) {
           // Player hit!
           sound.playPlayerHit();
+          haptic.damage();
           this.scene.triggerScreenShake(0.7);
           this.player.takeDamage(eb.damage);
 
@@ -375,6 +381,7 @@ export class GameController {
     }
 
     sound.playLevelUp();
+    haptic.explosion();
     this.scene.triggerScreenShake(1.2);
 
     this.stats.waveClearNotice = `VIHOLLINEN TUHOTTU! +${pointsGained} PISTETTÄ! TASO ${this.stats.level + 1} LÄHESTYY...`;
@@ -387,6 +394,7 @@ export class GameController {
   private handlePlayerDeath() {
     this.stats.isGameOver = true;
     sound.playEnemyExplosion();
+    haptic.explosion();
     sound.stopMusic();
     this.scene.triggerScreenShake(1.8);
 
@@ -420,7 +428,25 @@ export class GameController {
   }
 
   public resize(width: number, height: number) {
+    if (!width || !height) return;
     this.scene.handleResize(width, height);
+    const aspect = width / height;
+
+    if (aspect < 1.0) {
+      // Smartphone Portrait Mode: narrow bounds dynamically to prevent going off-screen
+      const halfWidth = Math.max(7.5, Math.min(13, 11 * aspect));
+      this.player.bounds.minX = -halfWidth;
+      this.player.bounds.maxX = halfWidth;
+      this.player.bounds.minY = -12;
+      this.player.bounds.maxY = 11;
+      this.enemy.maxHorizontalBound = halfWidth * 0.8;
+    } else {
+      this.player.bounds.minX = -16;
+      this.player.bounds.maxX = 16;
+      this.player.bounds.minY = -9;
+      this.player.bounds.maxY = 9;
+      this.enemy.maxHorizontalBound = 11;
+    }
   }
 
   public dispose() {

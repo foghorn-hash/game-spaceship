@@ -1,0 +1,14 @@
+{
+  "appId": "com.plasmavoid.game",
+  "appName": "Plasma Void 3D",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#020208",
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}
